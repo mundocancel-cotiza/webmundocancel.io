@@ -1,5 +1,5 @@
 /* ═══════════ CONFIG ═══════════ */
-const WA_NUM = '5215512345678'; // ← cambia este número por el tuyo (código país + número)
+const WA_NUM = '5213320827128'; // ← cambia este número por el tuyo (código país + número)
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 const waLink = m => `https://wa.me/${WA_NUM}?text=${encodeURIComponent(m)}`;
