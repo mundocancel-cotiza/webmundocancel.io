@@ -44,7 +44,7 @@ const PROJECTS = [
  {id:'p36', t:'Edificio de Departamentos', cat:'fachadas', year:'2021', seed:'fachada-edificio-departamentos', ar:'4/3', client:'Residencial', role:'Cancelería y barandales de vidrio', desc:'Edificio de departamentos con balcones y barandales de vidrio.'},
  {id:'p37', t:'Ventana en Arco con Retícula', cat:'fachadas', year:'2022', seed:'ventana-arco-reticula-blanca', ar:'4/3', client:'Residencial', role:'Ventana en arco', desc:'Ventana en arco blanca con retícula grande en terraza.'}
 ];
-const FEATURED = ['p22','p1','p4','p7','p8'];
+const FEATURED = ['p13','p22','p1','p4','p7','p8'];
 const byId = id => PROJECTS.find(p=>p.id===id);
 
 /* ═══════════ UTILIDADES ═══════════ */
