@@ -142,11 +142,11 @@ body.menu-open #mnav .msoc{opacity:1}
 .frame .expand{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;transition:.3s var(--pop)}
 .frame .expand:hover{transform:scale(1.1)}
 .frame .expand svg{width:18px;height:18px}
-.meta{position:absolute;left:-26px;bottom:-30px;width:min(300px,80%);border-radius:var(--r-md);padding:18px 20px;z-index:3}
+.meta{position:absolute;left:-26px;bottom:-30px;width:min(300px,80%);border-radius:var(--r-md);padding:18px 20px;z-index:3;background:rgba(8,9,14,.88)}
 .mrow{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
 .mrow:last-child{border:none}
 .mrow span{color:var(--mut);font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase}
-.mrow b{font-weight:600;font-size:.92rem}
+.mrow b{font-weight:600;font-size:.92rem;text-align:right;max-width:68%}
 .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--mut)}
 .scroll-cue i{width:1px;height:44px;background:linear-gradient(var(--acc),transparent);display:block;animation:cue 1.8s var(--ease) infinite}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
@@ -307,6 +307,7 @@ footer .mono{color:var(--mut)}
   #nav .btn-wa span{display:none}
   #nav .btn-wa{width:42px;height:42px;padding:0;justify-content:center;border-radius:50%}
   .frame{aspect-ratio:1/1}
+  .meta{position:static;width:100%;margin-top:14px;left:auto;bottom:auto}
   .thumbs{flex-wrap:wrap}
   .scroll-cue{display:none}
 }
