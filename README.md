@@ -1,225 +1,161 @@
-mundocancel web contacto 
+# Mundo Cancel — webmundocancel.io
 
-# 📝 Guía de Edición — LÚMINA (Portafolio Galería)
+Sitio de una sola página para **Mundo Cancel, cancelería de aluminio y vidrio**:
+galería de trabajos reales, colecciones por tipo de trabajo y cotización por WhatsApp.
 
-> Documento de referencia para personalizar el prototipo de página web.
-> Abre el archivo `index.html` en tu editor y sigue las secciones de abajo.
+> Estado actual: 15 trabajos reales con fotos propias en `img/` (WebP).
+> La galería ya no usa imágenes de prueba. Quedan pendientes los datos de
+> contacto/redes/testimonios — ver la checklist al final, no inventarlos.
 
----
+## Estructura
 
-## 🗂️ 1. Estructura del archivo
-
-| Zona | Qué contiene | Dónde está |
-|---|---|---|
-| `<head>` | Fuentes, título, SEO | Líneas iniciales |
-| `<style>` | Todo el CSS | Dentro del `<head>` |
-| `<body>` | Secciones HTML visibles | Después del `</style>` |
-| `<script>` | Toda la lógica JS | Antes del `</body>` |
-
-**Secciones de la página (en orden):**
-1. `#inicio` → Sala principal / pieza destacada
-2. `.marquee` → Cinta de disciplinas en movimiento
-3. `#obra` → Galería con filtros
-4. `#colecciones` → Carrusel de salas temáticas
-5. `#proceso` → Método de trabajo (sticky)
-6. `.stats` → Cifras animadas
-7. `.testi` → Testimonios
-8. `#contacto` → WhatsApp + redes
-9. `<footer>` → Créditos
-
----
-
-## 📱 2. WhatsApp (¡cámbialo primero!)
-
-Busca esta línea al inicio del `<script>`:
-
-```js
-const WA_NUM = '5215512345678'; // ← cambia este número
+```
+index.html          Página (ojo: minúsculas, así la sirven Netlify y GitHub Pages)
+css/styles.css      Todo el CSS
+js/config.js        WhatsApp, categorías, proyectos, redes sociales
+js/main.js          Galería, lightbox, hero, colecciones, filtros
+img/                Fotos reales en WebP (8 archivos, ~500 KB)
+incoming/           Bandeja de entrada: aquí se sueltan las fotos nuevas (no se sube a git)
+tools/feed-images.py  Script que optimiza las fotos y actualiza el código
+robots.txt / sitemap.xml
 ```
 
-**Formato:** código de país + número, **sin** `+`, espacios ni guiones.
+Secciones de la página (en orden): `#inicio` (hero) → marquee →
+`#obra` (galería con filtros) → `#colecciones` → `#proceso` →
+`#contacto` → footer.
 
-| País | Ejemplo correcto |
+## Cómo agregar o cambiar una foto (sin tocar código)
+
+1. Suelta la foto en `incoming/` con el nombre exacto del trabajo, por ejemplo
+   `fachada-blanca-ventanales-negros.webp`. Acepta WebP, JPG y PNG.
+   Si es un trabajo nuevo, primero agrégalo al array `PROJECTS` (abajo).
+2. Corre:
+   ```bash
+   python3 tools/feed-images.py --check   # solo revisa qué falta
+   python3 tools/feed-images.py           # optimiza y actualiza el código
+   ```
+   El script guarda la foto optimizada en `img/` (WebP, lado mayor 1600 px)
+   y deja `incoming/` listo para la siguiente. Para JPG en vez de WebP:
+   `python3 tools/feed-images.py --format jpg`.
+3. Recarga la página. No hay que editar ninguna URL a mano.
+
+Fotos actuales (todas 960×1200, proporción 4/5):
+
+| Archivo | Trabajo |
 |---|---|
-| México | `5215512345678` |
-| Colombia | `573001234567` |
-| España | `34600123456` |
-| Argentina | `5491123456789` |
+| `fachada-blanca-ventanales-negros.webp` | Fachada Blanca |
+| `puertas-interiores-gris-grafito.webp` | Puertas Interiores Grafito |
+| `puerta-negra-esmerilada-abatible.webp` | Puerta Negra Esmerilada |
+| `esquina-hueso-cancel-corredizo.webp` | Esquina a Hueso 3" |
+| `fachada-piedra-cristal.webp` | Fachada Piedra y Cristal |
+| `puertas-ventanas-aluminio-blanco.webp` | Puertas y Ventanas Blancas |
+| `fachada-ladrillo-ventanales.webp` | Fachada Ladrillo |
+| `cancel-bano-vidrio-templado.webp` | Cancel de Baño |
+| `fachada-beige-cristal-piso-techo.webp` | Fachada Beige Cristal |
+| `fachada-piedra-columna-gris.webp` | Fachada Piedra y Columna |
+| `muro-cristal-corredizo-cocina.webp` | Muro de Cristal Corredizo |
+| `domo-vidrio-azotea.webp` | Domo de Vidrio |
+| `fachada-piedra-alberca-atardecer.webp` | Fachada Piedra y Alberca |
+| `puerta-doble-vidrio-negra.webp` | Puerta Doble de Vidrio |
+| `cancel-bano-riel-negro.webp` | Cancel de Baño Riel Negro |
 
-Los mensajes predefinidos están en cada atributo `data-msg="..."`. Puedes editarlos libremente:
+## Cómo editar los trabajos
 
-```html
-<a class="btn btn-wa" data-wa data-msg="Hola, quiero cotizar un proyecto">
-```
-
----
-
-## 🎨 3. Identidad visual (CSS)
-
-Todo se controla desde las variables en `:root`:
-
-```css
-:root{
-  --bg:#07080d;       /* fondo principal */
-  --tx:#f4f5f8;       /* color de texto */
-  --acc:#e5c07b;      /* acento dorado (botones, detalles) */
-  --acc2:#8ab4ff;     /* acento secundario */
-  --wa:#25d366;       /* verde WhatsApp */
-  --r-lg:24px;        /* redondeo grande */
-  --r-md:18px;        /* redondeo medio */
-}
-```
-
-**Paletas sugeridas para probar:**
-
-| Estilo | `--acc` | `--bg` |
-|---|---|---|
-| Dorado (actual) | `#e5c07b` | `#07080d` |
-| Azul eléctrico | `#6ea8ff` | `#05070d` |
-| Verde salvia | `#9fc7a4` | `#0a0d0a` |
-| Coral | `#ff8f6b` | `#0d0808` |
-| Lila | `#b79cff` | `#0a0810` |
-
-**Fuentes tipográficas** (cámbialas en el `<link>` de Google Fonts):
-
-```
-Display: Syne          → títulos
-Cuerpo:  Instrument Sans → párrafos
-Mono:    Space Mono    → etiquetas técnicas
-```
-
----
-
-## 🖼️ 4. Tus proyectos (lo más importante)
-
-Edita el array `PROJECTS` en el `<script>`. Cada proyecto es un objeto:
+En `js/config.js`, cada trabajo es un objeto del array `PROJECTS`:
 
 ```js
 {
-  id:'p1',                     // identificador único
-  t:'Aura Café',               // título de la obra
-  cat:'identidad',             // categoría: identidad | web | foto | 3d
-  year:'2025',                 // año
-  seed:'branding-aura-cafe',   // semilla de imagen (o URL completa)
-  ar:'4/3',                    // proporción: 4/3, 3/4, 1/1, 16/10, 4/5
-  w:900, h:675,                // dimensiones de la imagen
-  client:'Aura Café',          // cliente
-  role:'Dirección de arte',    // tu rol
+  id:'p1',                   // identificador único
+  t:'Fachada Blanca',        // título que se ve en la galería y el lightbox
+  cat:'fachadas',            // categoría: fachadas | puertas | canceles
+  year:'2026',
+  seed:'fachada-blanca-ventanales-negros',  // nombre del archivo en img/, sin extensión
+  ar:'4/5',                  // proporción de la foto
+  client:'Residencial',
+  role:'Ventanales y puertas corredizas',
   desc:'Descripción breve...'  // texto del lightbox
 }
 ```
 
-**Categorías disponibles** (objeto `CATS`):
+Categorías (`CATS` en el mismo archivo): `fachadas`, `puertas`, `canceles`.
+Si agregas una categoría nueva, agrega también su botón en `#filters` de
+`index.html` y su colección en `COLS` de `js/main.js`.
 
-```js
-const CATS = {
-  identidad:'Identidad',
-  web:'Web & App',
-  foto:'Fotografía',
-  '3d':'3D & Render'
-};
-```
-> Puedes agregar nuevas categorías aquí y su botón de filtro correspondiente en `#filters`.
+Piezas destacadas del hero (4 IDs): `FEATURED` en `js/config.js`,
+hoy `['p1','p4','p7','p8']`.
 
-**Piezas destacadas del hero** (elige 4 IDs):
+Colecciones (`COLS` en `js/main.js`): Fachadas (7 piezas), Puertas (4),
+Canceles (4). Cada colección reutiliza la foto de un proyecto, no necesita
+archivo propio; el campo `n` es el conteo que se muestra.
 
-```js
-const FEATURED = ['p1','p2','p7','p4'];
-```
+## WhatsApp y contacto
 
-### Usar tus propias imágenes
+- Número: `WA_NUM` al inicio de `js/config.js`, hoy `5213320827128`.
+  Formato: código de país + número, sin `+`, espacios ni guiones.
+  **Verificar que sea el número correcto de Mundo Cancel.**
+- Los mensajes predefinidos están en cada atributo `data-msg="..."` de
+  `index.html` y en `js/config.js` / `js/main.js` (función `waLink`).
+- Teléfono visible: `+52 33 2082 7128` (se deriva del `WA_NUM`).
 
-Reemplaza la función que genera URLs. Busca `picsum.photos/seed/` y cambia por tu ruta:
+## Identidad visual
 
-```js
-// Antes
-src = `https://picsum.photos/seed/${p.seed}/${p.w}/${p.h}`
+Variables en `:root` de `css/styles.css`:
 
-// Después (ejemplo con carpeta local)
-src = `img/${p.seed}.jpg`
-```
-
----
-
-## 🌐 5. Redes sociales
-
-Edita el array `SOCIALS` en el `<script>`:
-
-```js
-const SOCIALS=[
-  { n:'Instagram', u:'https://instagram.com/TU_USUARIO', svg:'...' },
-  { n:'Behance',   u:'https://behance.net/TU_USUARIO', txt:'Bē' },
-  // agrega o elimina las que quieras
-];
-```
-
----
-
-## ✍️ 6. Textos editables
-
-| Texto | Dónde buscarlo |
-|---|---|
-| Nombre de marca | `LÚMINA®` (nav + footer) |
-| Título del sitio | `<title>` en el `<head>` |
-| Descripción SEO | `<meta name="description">` |
-| Subtítulo del hero | `.hero-sub` |
-| Disciplinas del marquee | `#mqTrack` |
-| Pasos del proceso | `article.step` |
-| Cifras | atributos `data-n` en `.stat` |
-| Testimonios | `article.tcard` |
-| Correo de contacto | `hola@lumina.studio` (aparece 2 veces + en JS del botón copiar) |
-| Teléfono mostrado | `+52 55 1234 5678` |
-
----
-
-## ✅ 7. Checklist antes de publicar
-
-- [ ] Número de WhatsApp actualizado en `WA_NUM`
-- [ ] Teléfono visible coincide con el de WhatsApp
-- [ ] Correo real en las 3 apariciones
-- [ ] URLs de redes sociales correctas
-- [ ] Proyectos reales en el array `PROJECTS`
-- [ ] Imágenes propias (opcional pero recomendado)
-- [ ] Nombre de marca reemplazado (buscar y reemplazar `LÚMINA`)
-- [ ] Título y descripción SEO actualizados
-- [ ] Año del footer (se actualiza solo con `new Date()`)
-- [ ] Probar en móvil y escritorio
-- [ ] Probar que `prefers-reduced-motion` no rompa nada
-
----
-
-## ⚙️ 8. Ajustes avanzados
-
-**Velocidad del marquee:**
 ```css
-.mq-track{ animation:mq 26s linear infinite; } /* sube el número = más lento */
+--bg:#07080d;   /* fondo principal */
+--tx:#f4f5f8;   /* color de texto */
+--acc:#e5c07b;  /* acento dorado */
+--wa:#25d366;   /* verde WhatsApp */
 ```
 
-**Velocidad de rotación del hero (ms):**
-```js
-heroTimer=setInterval(()=>setFeatured(feat+1),6000); // 6000 = 6 segundos
-```
+Fuentes (Google Fonts): Syne (títulos), Instrument Sans (texto),
+Space Mono (etiquetas).
 
-**Intensidad del tilt 3D:**
-```js
-el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`;
-// cambia 5 por 8 para más efecto, o 3 para menos
-```
+## Textos editables
 
-**Desactivar el anillo del cursor:** elimina el bloque `/* CURSOR */` al final del script.
+| Texto | Dónde |
+|---|---|
+| Título del sitio y descripción SEO | `<title>` y `<meta name="description">` en `index.html` |
+| Subtítulo del hero | `.hero-sub` en `index.html` |
+| Textos del marquee | `#mqTrack` en `index.html` |
+| Pasos del proceso | `article.step` en `index.html` |
+| Cifras | atributos `data-n` en `.stat` |
+| Testimonios | Sección eliminada por ahora; se repone cuando lleguen los comentarios reales de clientes |
+| Redes sociales | array `SOCIALS` en `js/config.js` |
+| Correo de contacto | `mundocancel@gmail.com` en `index.html` y `js/main.js` (botón copiar) |
 
-**Desactivar la isla dinámica:** elimina el bloque `/* ISLAND */`.
+## Checklist antes de publicar
 
----
+- [x] Fotos reales en `img/` y galería sin imágenes de prueba
+- [x] `index.html` enlaza `css/styles.css`, `js/config.js` y `js/main.js`
+- [x] Filtros y colecciones coinciden con las categorías reales
+- [x] **Número de WhatsApp confirmado**: `5213320827128`
+- [x] **Correo real**: `mundocancel@gmail.com`
+- [ ] **Redes sociales reales** (hoy apuntan a `lumina.studio`, de la plantilla)
+- [x] **Testimonios falsos eliminados** (sección quitada; se vuelve a poner con los comentarios reales de clientes consolidados)
+- [x] **Cifras falsas eliminadas** (sección quitada; se vuelve a poner solo con números reales)
+- [ ] **Proceso real** (hoy habla de brief/moodboard/sprints, lenguaje de
+      estudio creativo; el proceso real es medición → fabricación → instalación)
+- [x] **Ciudad**: Zona Metropolitana de Guadalajara, Jalisco, con cobertura en casi todo el estado
+- [ ] Probar en móvil y escritorio, y con `prefers-reduced-motion`
 
-## 🚀 9. Publicación rápida
+## Ajustes avanzados
 
-1. Guarda el archivo como `index.html`
-2. Opciones gratuitas:
-   - **Netlify Drop** → arrastra el archivo a [app.netlify.com/drop](https://app.netlify.com/drop)
-   - **GitHub Pages** → sube a un repositorio y activa Pages
-   - **Vercel** → `vercel deploy` en la carpeta
-3. Comparte el enlace en tu bio de redes ✦
+- Velocidad del marquee: `.mq-track{ animation:mq 26s linear infinite; }`
+  (el contenido se duplica solo en JS para que el loop no tenga hueco).
+- Rotación del hero: `setInterval(()=>setFeatured(feat+1),6000)` en `js/main.js`.
+- Tilt 3D: `rotateY(${x*5}deg)` en `js/main.js` (5 = intensidad).
+- Para desactivar el anillo del cursor: elimina el bloque `/* CURSOR */`
+  de `js/main.js`. Para la isla dinámica: el bloque `/* ISLAND */`.
 
----
+## Publicación
 
+El repo es `mundocancel-cotiza/webmundocancel.io`. Opciones gratuitas:
+
+- **Netlify** → conecta el repo; publica la raíz tal cual (no hay build).
+- **GitHub Pages** → sube el repo y activa Pages desde la rama principal.
+- **Netlify Drop** → arrastra la carpeta a
+  [app.netlify.com/drop](https://app.netlify.com/drop) para una prueba rápida.
+
+Para probar en local: `python3 -m http.server` dentro de la carpeta y abrir
+`http://localhost:8000/`.
