@@ -4,7 +4,7 @@ const grid = $('#grid');
 grid.innerHTML = PROJECTS.map((p,i)=>`
  <figure class="card glass rv" data-id="${p.id}" data-cat="${p.cat}" style="transition-delay:${(i%6)*60}ms" tabindex="0" role="button" aria-label="Ver ${p.t}">
    <div class="ph" style="aspect-ratio:${p.ar}">
-     <img src="https://picsum.photos/seed/${p.seed}/${p.w}/${p.h}" alt="${p.t} — ${CATS[p.cat]}" loading="lazy">
+     <img src="img/${p.seed}.webp" alt="${p.t} — ${CATS[p.cat]}" loading="lazy">
    </div>
    <span class="idx">${String(i+1).padStart(2,'0')}</span>
    <span class="hover-hint glass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M21 3l-9 9"/></svg></span>
@@ -38,7 +38,7 @@ function openLB(id){
 }
 function paintLB(){
   const p = PROJECTS[lbIdx];
-  $('#lbImg').src = `https://picsum.photos/seed/${p.seed}/${Math.round(p.w*1.6)}/${Math.round(p.h*1.6)}`;
+  $('#lbImg').src = `img/${p.seed}.webp`;
   $('#lbImg').alt = `${p.t} — ${CATS[p.cat]}`;
   $('#lbIdx').textContent = `${String(lbIdx+1).padStart(2,'0')} / ${PROJECTS.length}`;
   $('#lbTitle').textContent = p.t;
@@ -46,7 +46,7 @@ function paintLB(){
   $('#lbYear').textContent = p.year + (p.client?` · ${p.client}`:'');
   $('#lbDesc').textContent = p.desc;
   const wa = $('#lbWa');
-  wa.href = waLink(`Hola LÚMINA ✦ Me interesa la pieza "${p.t}" (${CATS[p.cat]}, ${p.year}). ¿Me cuentan más?`);
+  wa.href = waLink(`Hola Mundo Cancel ✦ Me interesa "${p.t}" (${CATS[p.cat]}, ${p.year}). ¿Me cuentan más?`);
   wa.target='_blank'; wa.rel='noopener';
 }
 function closeLB(){ lb.classList.remove('open'); document.body.style.overflow=''; }
@@ -67,7 +67,7 @@ let feat = 0, heroTimer = null;
 const thumbs = $('#thumbs');
 thumbs.innerHTML = FEATURED.map((id,i)=>{
   const p=byId(id);
-  return `<button class="thumb glass" role="tab" data-i="${i}" aria-label="${p.t}"><img src="https://picsum.photos/seed/${p.seed}/160/110" alt=""><span class="bar"></span></button>`;
+  return `<button class="thumb glass" role="tab" data-i="${i}" aria-label="${p.t}"><img src="img/${p.seed}.webp" alt=""><span class="bar"></span></button>`;
 }).join('');
 
 function setFeatured(i,manual){
@@ -77,12 +77,12 @@ function setFeatured(i,manual){
   img.classList.add('fading');
   const nx = new Image();
   nx.onload = ()=>{ img.src=nx.src; img.alt=`${p.t} — ${CATS[p.cat]}`; img.classList.remove('fading'); };
-  nx.src = `https://picsum.photos/seed/${p.seed}/1400/1050`;
+  nx.src = `img/${p.seed}.webp`;
   scramble($('#heroTitle'), p.t.toUpperCase());
   $('#heroKick').textContent = `Pieza ${String(feat+1).padStart(2,'0')} — ${CATS[p.cat]}`;
   $('#heroTag').textContent = `Pieza ${String(feat+1).padStart(2,'0')} / 0${FEATURED.length}`;
   $('#mCliente').textContent = p.client; $('#mYear').textContent = p.year; $('#mRol').textContent = p.role;
-  $('#heroWa').dataset.msg = `Hola, me interesa la pieza "${p.t}" de su portafolio. ¿Platicamos?`;
+  $('#heroWa').dataset.msg = `Hola, me interesa la pieza "${p.t}" de su galería. ¿Platicamos?`;
   $('#heroWa').href = waLink($('#heroWa').dataset.msg);
   $$('.thumb').forEach((t,k)=>{ t.classList.remove('on'); void t.offsetWidth; if(k===feat) t.classList.add('on'); });
   if(manual) restartHero();
@@ -96,16 +96,18 @@ heroStage.addEventListener('mouseleave',restartHero);
 document.addEventListener('visibilitychange',()=>{ document.hidden?clearInterval(heroTimer):restartHero(); });
 setFeatured(0); restartHero();
 
+/* ═══════════ MARQUEE (duplicar para un loop sin hueco) ═══════════ */
+const mqTrack=$('#mqTrack'); if(mqTrack) mqTrack.innerHTML += mqTrack.innerHTML;
+
 /* ═══════════ COLECCIONES (RAIL) ═══════════ */
 const COLS=[
- {t:'Identidades', f:'identidad', seed:'collection-branding-moodboard', n:'03 piezas'},
- {t:'Web & Producto', f:'web', seed:'collection-web-ui-screens', n:'03 piezas'},
- {t:'Fotografía', f:'foto', seed:'collection-photography-prints', n:'03 piezas'},
- {t:'3D & Render', f:'3d', seed:'collection-3d-shapes-gallery', n:'03 piezas'}
+ {t:'Fachadas', f:'fachadas', seed:'fachada-blanca-ventanales-negros', n:'21 piezas'},
+ {t:'Puertas', f:'puertas', seed:'puertas-interiores-gris-grafito', n:'08 piezas'},
+ {t:'Canceles', f:'canceles', seed:'esquina-hueso-cancel-corredizo', n:'08 piezas'}
 ];
 $('#rail').innerHTML = COLS.map(c=>`
  <article class="rcard glass" data-f="${c.f}" data-t="${c.t}" tabindex="0" role="button" aria-label="Abrir colección ${c.t}">
-   <img src="https://picsum.photos/seed/${c.seed}/640/700" alt="Colección ${c.t}" draggable="false">
+   <img src="img/${c.seed}.webp" alt="Colección ${c.t}" draggable="false">
    <div class="rc"><span class="chip">${c.n}</span><h3>${c.t}</h3>
    <span class="go">Explorar sala <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span></div>
  </article>`).join('');
@@ -115,6 +117,7 @@ $('#rail').addEventListener('click',e=>{
   document.getElementById('obra').scrollIntoView({behavior:RM?'auto':'smooth'});
   toast(`Colección “${c.dataset.t}” ✦`);
 });
+$('#rail').addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ const c=e.target.closest('.rcard'); if(c){ e.preventDefault(); c.click(); } } });
 /* arrastrar */
 const rail=$('#rail'); let down=false,sx=0,sl=0;
 rail.addEventListener('pointerdown',e=>{ down=true; sx=e.clientX; sl=rail.scrollLeft; rail.classList.add('dragging'); });
@@ -123,24 +126,14 @@ window.addEventListener('pointerup',()=>{ down=false; rail.classList.remove('dra
 $('#railPrev').onclick=()=>rail.scrollBy({left:-420,behavior:RM?'auto':'smooth'});
 $('#railNext').onclick=()=>rail.scrollBy({left:420,behavior:RM?'auto':'smooth'});
 
-/* ═══════════ REVEALS + CONTADORES ═══════════ */
+/* ═══════════ REVEALS ═══════════ */
 const io = new IntersectionObserver(es=>es.forEach(en=>{
   if(!en.isIntersecting) return;
   en.target.classList.add('in');
-  en.target.querySelectorAll?.('.num[data-n]').forEach(animNum);
-  if(en.target.matches('.num[data-n]')) animNum(en.target);
   io.unobserve(en.target);
 }),{threshold:.15});
-function observe(){ $$('.rv,.lm').forEach(el=>io.observe(el)); $$('.num[data-n]').forEach(el=>io.observe(el)); }
+function observe(){ $$('.rv,.lm').forEach(el=>io.observe(el)); }
 observe();
-function animNum(el){
-  if(el._done) return; el._done=true;
-  const n=+el.dataset.n, s=el.dataset.s||'';
-  if(RM){ el.textContent=n+s; return; }
-  const t0=performance.now(), D=1400;
-  (function tick(t){ const k=Math.min(1,(t-t0)/D), e=1-Math.pow(1-k,3);
-    el.textContent=Math.round(n*e)+s; if(k<1) requestAnimationFrame(tick); })(t0);
-}
 
 /* ═══════════ SCROLL: nav, progreso, parallax, top ═══════════ */
 const nav=$('#nav'), ghost=$('#ghost'), toTop=$('#toTop');
@@ -165,12 +158,12 @@ $$('#mnav a.big').forEach(a=>a.addEventListener('click',()=>document.body.classL
 /* ═══════════ ISLAND (estilo Dynamic Island) ═══════════ */
 setTimeout(()=>$('#island').classList.add('show'),1100);
 setTimeout(()=>$('#island').classList.remove('show'),6500);
-$('#island').addEventListener('click',()=>{ window.open(waLink('Hola LÚMINA 👋 Vi el aviso de disponibilidad y quiero un proyecto.'),'_blank'); });
+$('#island').addEventListener('click',()=>{ window.open(waLink('Hola Mundo Cancel 👋 Vi el aviso de disponibilidad y quiero cotizar un proyecto.'),'_blank'); });
 
 /* ═══════════ COPIAR CORREO ═══════════ */
 $('#copyMail').onclick=async()=>{
-  try{ await navigator.clipboard.writeText('hola@lumina.studio'); toast('Correo copiado ✓'); }
-  catch{ toast('hola@lumina.studio'); }
+  try{ await navigator.clipboard.writeText('mundocancel@gmail.com'); toast('Correo copiado ✓'); }
+  catch{ toast('mundocancel@gmail.com'); }
 };
 
 /* ═══════════ TILT ═══════════ */

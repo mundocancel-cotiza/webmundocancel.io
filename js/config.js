@@ -4,22 +4,47 @@ const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 const waLink = m => `https://wa.me/${WA_NUM}?text=${encodeURIComponent(m)}`;
 
-const CATS = {identidad:'Identidad', web:'Web & App', foto:'Fotografía', '3d':'3D & Render'};
+const CATS = {fachadas:'Fachadas', puertas:'Puertas', canceles:'Canceles'};
 const PROJECTS = [
- {id:'p1', t:'Aura Café',        cat:'identidad', year:'2025', seed:'branding-aura-cafe',       ar:'4/3',  w:900,  h:675,  client:'Aura Café',     role:'Dirección de arte', desc:'Identidad integral para cafetería de especialidad: naming, logotipo, sistema visual, empaque y señalética del local.'},
- {id:'p2', t:'Nébula Finance',   cat:'web',       year:'2024', seed:'fintech-app-nebula-ui',    ar:'3/4',  w:750,  h:1000, client:'Nébula',        role:'UX/UI + Desarrollo', desc:'Diseño de producto para fintech: sistema de diseño, landing page y aplicación móvil iOS/Android.'},
- {id:'p3', t:'Retrato Editorial',cat:'foto',      year:'2025', seed:'studio-editorial-portrait',ar:'3/4',  w:750,  h:1000, client:'Revista Prisma',role:'Fotografía', desc:'Serie de retratos en estudio para la edición Nº12 de Revista Prisma. Luz dura, fondo neutro, carácter.'},
- {id:'p4', t:'Monolito',         cat:'3d',        year:'2024', seed:'3d-monolith-render-dark',  ar:'1/1',  w:900,  h:900,  client:'Personal',      role:'3D & Render', desc:'Exploración escultórica digital: volúmenes pétreos flotantes con iluminación dramática. Render 4K.'},
- {id:'p5', t:'Kōri Tea',         cat:'identidad', year:'2024', seed:'packaging-kori-tea',       ar:'4/5',  w:800,  h:1000, client:'Kōri',          role:'Branding + Packaging', desc:'Identidad y empaque para línea de tés fríos de inspiración japonesa. Minimalismo y textura.'},
- {id:'p6', t:'Ondas',            cat:'web',       year:'2025', seed:'music-web-waves-audio',    ar:'16/10',w:1200, h:750,  client:'Ondas Records', role:'Web creativa', desc:'Experiencia web interactiva para sello de música electrónica: audio-reactividad y WebGL.'},
- {id:'p7', t:'Neón Urbano',      cat:'foto',      year:'2023', seed:'urban-neon-night-street',  ar:'16/10',w:1200, h:750,  client:'Galería Norte', role:'Fotografía', desc:'Serie fotográfica nocturna: la ciudad como circuito de luz. Exhibida en Galería Norte, 2023.'},
- {id:'p8', t:'Vitrales',         cat:'3d',        year:'2025', seed:'glass-abstract-3d-art',    ar:'4/5',  w:800,  h:1000, client:'Colección',     role:'3D & Render', desc:'Estudio de materiales translúcidos y refracción. Pieza parte de la colección digital del estudio.'},
- {id:'p9', t:'Terra Vinos',      cat:'identidad', year:'2023', seed:'wine-label-terra-brand',   ar:'1/1',  w:900,  h:900,  client:'Terra Vinos',   role:'Branding', desc:'Identidad y etiquetas para viñedo boutique: papel algodón, foil cobre y tipografía a medida.'},
- {id:'p10',t:'Atlas Panel',      cat:'web',       year:'2024', seed:'dashboard-analytics-atlas',ar:'4/3',  w:960,  h:720,  client:'Atlas Data',    role:'UX/UI', desc:'Dashboard de analítica en tiempo real: dark mode, visualización de datos y micro-interacciones.'},
- {id:'p11',t:'Prisma Moda',      cat:'foto',      year:'2024', seed:'fashion-editorial-prisma', ar:'3/4',  w:750,  h:1000, client:'Prisma',        role:'Fotografía', desc:'Editorial de moda primavera: color bloque, geometría y movimiento congelado.'},
- {id:'p12',t:'Flora Digital',    cat:'3d',        year:'2023', seed:'digital-flora-3d-render',  ar:'1/1',  w:900,  h:900,  client:'Personal',      role:'3D & Render', desc:'Botánica imposible: flora generativa explorando color y simetría orgánica.'}
+ {id:'p1', t:'Fachada Blanca',               cat:'fachadas', year:'2026', seed:'fachada-blanca-ventanales-negros',    ar:'4/5', client:'Residencial', role:'Ventanales y puertas corredizas', desc:'Fachada residencial con ventanales de aluminio negro y puertas corredizas de piso a techo.'},
+ {id:'p2', t:'Puertas Interiores Grafito',   cat:'puertas',  year:'2026', seed:'puertas-interiores-gris-grafito',     ar:'4/5', client:'Residencial', role:'Puertas interiores',              desc:'Puertas interiores de aluminio grafito con cristal claro y divisiones horizontales.'},
+ {id:'p3', t:'Puerta Negra Esmerilada',      cat:'puertas',  year:'2026', seed:'puerta-negra-esmerilada-abatible',     ar:'4/5', client:'Residencial', role:'Puerta y ventana abatible',        desc:'Puerta de aluminio negro con cristal esmerilado, ventana abatible y fijo superior en arco.'},
+ {id:'p4', t:'Esquina a Hueso 3"',           cat:'canceles', year:'2026', seed:'esquina-hueso-cancel-corredizo',       ar:'4/5', client:'Residencial', role:'Cancel corredizo',                desc:'Cancel corredizo en esquina a hueso de 3 pulgadas, cristal templado y perfilería negra.'},
+ {id:'p5', t:'Fachada Piedra y Cristal',     cat:'fachadas', year:'2026', seed:'fachada-piedra-cristal',               ar:'4/5', client:'Residencial', role:'Ventanales y puerta corrediza',    desc:'Fachada con muro de piedra, ventanal fijo y puerta corrediza de aluminio negro.'},
+ {id:'p6', t:'Puertas y Ventanas Blancas',   cat:'puertas',  year:'2026', seed:'puertas-ventanas-aluminio-blanco',     ar:'4/5', client:'Residencial', role:'Puertas y ventanas',              desc:'Puertas y ventanas de aluminio blanco con cristal bronce, para exterior.'},
+ {id:'p7', t:'Fachada Ladrillo',             cat:'fachadas', year:'2026', seed:'fachada-ladrillo-ventanales',          ar:'4/5', client:'Residencial', role:'Ventanales',                      desc:'Fachada de ladrillo con ventanales negros de dos niveles y puerta corrediza a recámara.'},
+ {id:'p8', t:'Cancel de Baño',               cat:'canceles', year:'2026', seed:'cancel-bano-vidrio-templado',          ar:'4/5', client:'Residencial', role:'Cancel de baño',                  desc:'Cancel de baño en vidrio templado con herraje corredizo, fijo y puerta.'},
+ {id:'p9', t:'Fachada Beige Cristal',        cat:'fachadas', year:'2026', seed:'fachada-beige-cristal-piso-techo',     ar:'4/5', client:'Residencial', role:'Ventanal de piso a techo y puertas corredizas', desc:'Casa de dos niveles con ventanal de piso a techo en planta alta y canceles corredizos que abren la cocina y el comedor al jardín.'},
+ {id:'p10', t:'Fachada Piedra y Columna',    cat:'fachadas', year:'2026', seed:'fachada-piedra-columna-gris',          ar:'4/5', client:'Residencial', role:'Ventanales y puertas corredizas',    desc:'Fachada con columna de piedra gris, volúmenes blancos y cancelería negra corrediza.'},
+ {id:'p11', t:'Muro de Cristal Corredizo',   cat:'fachadas', year:'2026', seed:'muro-cristal-corredizo-cocina',        ar:'4/5', client:'Residencial', role:'Canceles corredizos de piso a techo', desc:'Muro completo de cristal corredizo que conecta la cocina con el jardín.'},
+ {id:'p12', t:'Domo de Vidrio',              cat:'canceles', year:'2026', seed:'domo-vidrio-azotea',                   ar:'4/5', client:'Residencial', role:'Domo de vidrio templado',         desc:'Domo de vidrio templado en azotea que llena de luz natural el interior.'},
+ {id:'p13', t:'Fachada Piedra y Alberca',    cat:'fachadas', year:'2026', seed:'fachada-piedra-alberca-atardecer',     ar:'4/5', client:'Residencial', role:'Ventanales, barandal de vidrio y puertas corredizas', desc:'Casa de dos niveles con muro de piedra, barandal de vidrio en el balcón y canceles corredizos frente a la alberca.'},
+ {id:'p14', t:'Puerta Doble de Vidrio',      cat:'puertas',  year:'2026', seed:'puerta-doble-vidrio-negra',            ar:'4/5', client:'Residencial', role:'Puerta doble de aluminio negro y vidrio', desc:'Puerta doble interior de aluminio negro con vidrio claro, en pasillo de mármol.'},
+ {id:'p15', t:'Cancel de Baño Riel Negro',   cat:'canceles', year:'2026', seed:'cancel-bano-riel-negro',               ar:'4/5', client:'Residencial', role:'Cancel corredizo con riel negro', desc:'Cancel de baño corredizo con riel negro y vidrio templado, en baño de azulejo blanco.'},
+ {id:'p16', t:'Ventanal Negro con Retícula', cat:'fachadas', year:'2023', seed:'fachada-ventanal-negro-reticula-piedra', ar:'4/5', client:'Residencial', role:'Ventanal con retícula', desc:'Ventanal negro con retícula sobre muro de piedra y fachada blanca.'},
+ {id:'p17', t:'Cancel Corredizo Negro', cat:'canceles', year:'2023', seed:'cancel-corredizo-negro-tres-hojas', ar:'4/3', client:'Residencial', role:'Cancel corredizo', desc:'Cancel corredizo negro de tres hojas, vista frontal completa.'},
+ {id:'p18', t:'Patio con Canceles Negros', cat:'fachadas', year:'2023', seed:'fachada-patio-canceles-negros', ar:'4/3', client:'Residencial', role:'Canceles corredizos', desc:'Casa blanca terminada con canceles negros en el patio, cielo despejado.'},
+ {id:'p19', t:'Ventanal Espejo con Arco', cat:'fachadas', year:'2023', seed:'ventanal-negro-espejo-arco', ar:'4/3', client:'Residencial', role:'Ventanal espejo', desc:'Ventanal espejo negro con arco decorativo y palmera.'},
+ {id:'p20', t:'Puerta en Arco Abatible', cat:'puertas', year:'2024', seed:'puerta-arco-abatible-vidrio', ar:'4/5', client:'Residencial', role:'Puerta abatible en arco', desc:'Puerta en arco de vidrio abatible que abre a la terraza.'},
+ {id:'p21', t:'Cancel Corredizo en Terraza', cat:'canceles', year:'2019', seed:'cancel-corredizo-negro-terraza', ar:'4/3', client:'Residencial', role:'Cancel corredizo', desc:'Cancel corredizo negro gigante de piso a techo en terraza.'},
+ {id:'p22', t:'Casa Negra con Alberca', cat:'fachadas', year:'2019', seed:'fachada-casa-negra-alberca', ar:'4/5', client:'Residencial', role:'Ventanales y puertas corredizas', desc:'Casa moderna negra con alberca y jardín, cancelería negra de piso a techo.'},
+ {id:'p23', t:'Ventana en Arco con Cantera', cat:'fachadas', year:'2019', seed:'ventana-arco-blanca-cantera', ar:'4/3', client:'Residencial', role:'Ventana en arco', desc:'Ventana en arco blanca con retícula, muro de cantera y plantas.'},
+ {id:'p24', t:'Fachada Blanca con Canceles', cat:'fachadas', year:'2019', seed:'fachada-blanca-canceles-negros', ar:'4/3', client:'Residencial', role:'Cancelería negra', desc:'Fachada blanca terminada con cancelería negra grande.'},
+ {id:'p25', t:'Cancel de Baño en Mármol', cat:'canceles', year:'2019', seed:'cancel-bano-marmol-esquinero', ar:'4/3', client:'Residencial', role:'Cancel de baño', desc:'Cancel de baño esquinero negro sobre mármol.'},
+ {id:'p26', t:'Ventanal Negro de Piso a Techo', cat:'fachadas', year:'2026', seed:'ventanal-negro-piso-techo', ar:'4/5', client:'Residencial', role:'Ventanal de piso a techo', desc:'Ventanal negro enorme de piso a techo con vista a la calle.'},
+ {id:'p27', t:'Ventana con Rendijas Verticales', cat:'fachadas', year:'2019', seed:'ventana-negra-rendijas-verticales', ar:'4/5', client:'Residencial', role:'Ventana negra', desc:'Ventana negra con tres rendijas verticales en interior blanco.'},
+ {id:'p28', t:'Fachada Blanca Moderna', cat:'fachadas', year:'2019', seed:'fachada-blanca-moderna-dos-pisos', ar:'4/5', client:'Residencial', role:'Ventanales negros', desc:'Fachada moderna blanca de dos pisos con ventanales negros y barandal de vidrio.'},
+ {id:'p29', t:'Fachada de Ladrillo y Blanco', cat:'fachadas', year:'2019', seed:'fachada-ladrillo-blanco', ar:'4/3', client:'Residencial', role:'Ventanales', desc:'Fachada de ladrillo con volúmenes blancos y cancelería negra.'},
+ {id:'p30', t:'Puerta Negra con Retícula', cat:'puertas', year:'2019', seed:'puerta-negra-reticula', ar:'4/5', client:'Residencial', role:'Puerta interior', desc:'Puerta negra con divisiones horizontales, interior limpio y bien iluminado.'},
+ {id:'p31', t:'Cúpula con Ventanas en Arco', cat:'fachadas', year:'2020', seed:'cupula-ventanas-arco', ar:'4/5', client:'Residencial', role:'Ventanas en arco', desc:'Cúpula interior con cinco ventanitas en arco.'},
+ {id:'p32', t:'Puerta de Aluminio a Patio', cat:'puertas', year:'2020', seed:'puerta-aluminio-cocina-patio', ar:'4/5', client:'Residencial', role:'Puerta de aluminio', desc:'Puerta de aluminio con ventana junto a la cocina, que abre al patio.'},
+ {id:'p33', t:'Fachada con Ventanal Esquinero', cat:'fachadas', year:'2020', seed:'fachada-moderna-ventanal-esquinero', ar:'4/3', client:'Residencial', role:'Ventanal esquinero', desc:'Casa moderna blanca con ventanal esquinero de vidrio.'},
+ {id:'p34', t:'Cancel Corredizo en Comedor', cat:'canceles', year:'2021', seed:'cancel-corredizo-negro-comedor', ar:'4/5', client:'Residencial', role:'Cancel corredizo', desc:'Cancel corredizo negro gigante que abre el comedor a la cocina y al patio.'},
+ {id:'p35', t:'Puerta Corrediza de Local', cat:'puertas', year:'2021', seed:'puerta-corrediza-aluminio-local', ar:'4/3', client:'Comercial', role:'Puerta corrediza', desc:'Puerta corrediza de aluminio en local comercial de ladrillo.'},
+ {id:'p36', t:'Edificio de Departamentos', cat:'fachadas', year:'2021', seed:'fachada-edificio-departamentos', ar:'4/3', client:'Residencial', role:'Cancelería y barandales de vidrio', desc:'Edificio de departamentos con balcones y barandales de vidrio.'},
+ {id:'p37', t:'Ventana en Arco con Retícula', cat:'fachadas', year:'2022', seed:'ventana-arco-reticula-blanca', ar:'4/3', client:'Residencial', role:'Ventana en arco', desc:'Ventana en arco blanca con retícula grande en terraza.'}
 ];
-const FEATURED = ['p1','p2','p7','p4'];
+const FEATURED = ['p22','p1','p4','p7','p8'];
 const byId = id => PROJECTS.find(p=>p.id===id);
 
 /* ═══════════ UTILIDADES ═══════════ */
@@ -39,7 +64,7 @@ function scramble(el,text){
 
 /* enlaces WhatsApp dinámicos */
 $$('[data-wa]').forEach(a=>{
-  a.href = waLink(a.dataset.msg || 'Hola LÚMINA 👋 Vi su portafolio y quiero más información.');
+  a.href = waLink(a.dataset.msg || 'Hola Mundo Cancel 👋 Vi su galería y quiero cotizar.');
   a.target='_blank'; a.rel='noopener';
   a.addEventListener('click',()=>toast('Abriendo WhatsApp…'));
 });
